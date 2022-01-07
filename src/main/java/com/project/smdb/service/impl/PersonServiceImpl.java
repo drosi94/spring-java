@@ -19,7 +19,7 @@ public abstract class PersonServiceImpl<T extends Person> implements PersonServi
 
     @Override
     public T create(T person) {
-        return null;
+        return personRepository.save(person);
     }
 
     @Override
@@ -46,4 +46,10 @@ public abstract class PersonServiceImpl<T extends Person> implements PersonServi
     public T getById(Long id) {
         return null;
     }
+
+    @Override
+    public List<T> searchByName(String name) {
+        return personRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name, name);
+    }
+
 }

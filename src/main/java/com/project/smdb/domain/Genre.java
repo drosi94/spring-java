@@ -1,6 +1,7 @@
 package com.project.smdb.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
@@ -12,6 +13,7 @@ public class Genre {
     private Long id;
 
     @Column(name="name", nullable = false)
+    @NotBlank(message = "Name can not be blank")
     private String name;
 
     @OneToMany(mappedBy = "genre", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

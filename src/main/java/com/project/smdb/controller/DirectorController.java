@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("directors")
-public class DirectorController extends PersonController<Director>{
+public class DirectorController extends PersonController<Director> {
 
     @Autowired
     public DirectorController(DirectorServiceImpl directorService) {

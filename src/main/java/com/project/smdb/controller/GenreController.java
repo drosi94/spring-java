@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("genres")
 public class GenreController {
@@ -18,12 +20,12 @@ public class GenreController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody Genre genre) {
+    public ResponseEntity<?> create(@Valid @RequestBody Genre genre) {
         return ResponseEntity.ok(genreService.create(genre));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Genre genre) {
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody Genre genre) {
         return ResponseEntity.ok(genreService.update(id, genre));
     }
 

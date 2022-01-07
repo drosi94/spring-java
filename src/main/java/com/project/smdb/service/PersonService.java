@@ -11,4 +11,5 @@ public interface PersonService<T extends Person> {
     List<T> getAll();
     List<T> getByName(String name);
     T getById(Long id);
+    List<T> searchByName(String name);
 }

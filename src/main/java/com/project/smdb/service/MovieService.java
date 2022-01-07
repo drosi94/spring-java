@@ -10,5 +10,5 @@ public interface MovieService {
     void delete(Long id);
     List<Movie> getAll();
     List<Movie> getByName(String name);
-    Movie getById();
+    Movie getById(Long id);
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("actors")
-public class ActorController extends PersonController<Actor>{
+public class ActorController extends PersonController<Actor> {
 
     @Autowired
     public ActorController(ActorServiceImpl actorService) {

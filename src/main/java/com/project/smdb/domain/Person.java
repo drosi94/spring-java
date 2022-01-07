@@ -1,6 +1,7 @@
 package com.project.smdb.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @MappedSuperclass
 public class Person {
@@ -9,10 +10,12 @@ public class Person {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @Column(name="first_name")
+    @Column(name="first_name", nullable = false)
+    @NotBlank(message = "First name is mandatory")
     private String firstName;
 
-    @Column(name="last_name")
+    @Column(name="last_name", nullable = false)
+    @NotBlank(message = "Last name is mandatory")
     private String lastName;
 
     public Long getId() {

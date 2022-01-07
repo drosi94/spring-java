@@ -12,6 +12,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +22,7 @@ import static org.jeasy.random.FieldPredicates.named;
 
 
 @Component
+@Transactional
 public class DataLoader implements ApplicationRunner {
 
     private static Logger logger = LoggerFactory.getLogger(DataLoader.class);
