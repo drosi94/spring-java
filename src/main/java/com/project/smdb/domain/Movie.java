@@ -1,6 +1,9 @@
 package com.project.smdb.domain;
 
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -9,6 +12,9 @@ import java.util.Set;
 @Entity
 @Table(name = "movies")
 public class Movie implements Serializable {
+
+    private static final long serialVersionUID = -3302905745770369700L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
@@ -21,11 +27,12 @@ public class Movie implements Serializable {
 
     @Column(name = "plot")
     @Lob
-    private String plot = "";
+    private String plot;
 
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private MovieType type = MovieType.MOVIE;
+    @NotNull(message = "Type can not be empty")
+    private MovieType type;
 
     @Column(name = "duration", nullable = false)
     @NotNull(message = "Duration can not be empty")
@@ -43,8 +50,9 @@ public class Movie implements Serializable {
     @Max(message = "Rating should be less than 10", value = 10)
     private Double rating;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "genre_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull(message = "Genre can not be empty")
     private Genre genre;
 

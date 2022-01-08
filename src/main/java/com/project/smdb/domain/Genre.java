@@ -1,12 +1,19 @@
 package com.project.smdb.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "genres")
-public class Genre {
+public class Genre implements Serializable {
+
+    private static final long serialVersionUID = 6456148197484491249L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
@@ -16,8 +23,12 @@ public class Genre {
     @NotBlank(message = "Name can not be blank")
     private String name;
 
-    @OneToMany(mappedBy = "genre", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<Movie> movies;
+    @OneToMany(mappedBy = "genre", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JsonBackReference
+    private Set<Movie> movies = new HashSet<>();
+
+    public Genre() {
+    }
 
     public Long getId() {
         return id;

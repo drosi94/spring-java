@@ -42,7 +42,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<Genre> getAll() {
-        return new ArrayList<>((Collection<? extends Genre>) genreRepository.findAll());
+        return new ArrayList<>((Collection<Genre>) genreRepository.findAll());
     }
 
     @Override

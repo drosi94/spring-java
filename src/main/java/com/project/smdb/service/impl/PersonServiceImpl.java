@@ -1,6 +1,7 @@
 package com.project.smdb.service.impl;
 
 import com.project.smdb.domain.Person;
+import com.project.smdb.exception.ResourceNotFoundException;
 import com.project.smdb.repository.PersonRepository;
 import com.project.smdb.service.PersonService;
 
@@ -24,12 +25,16 @@ public abstract class PersonServiceImpl<T extends Person> implements PersonServi
 
     @Override
     public T update(Long id, T person) {
-        return null;
+        personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
+
+        return personRepository.save(person);
     }
 
     @Override
     public void delete(Long id) {
-
+        personRepository.delete(personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id)));
     }
 
     @Override
@@ -38,13 +43,9 @@ public abstract class PersonServiceImpl<T extends Person> implements PersonServi
     }
 
     @Override
-    public List<T> getByName(String name) {
-        return null;
-    }
-
-    @Override
     public T getById(Long id) {
-        return null;
+        return personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     @Override

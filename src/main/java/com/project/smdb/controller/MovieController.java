@@ -1,6 +1,7 @@
 package com.project.smdb.controller;
 
 import com.project.smdb.domain.Movie;
+import com.project.smdb.domain.MovieType;
 import com.project.smdb.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,8 +46,8 @@ public class MovieController {
         return ResponseEntity.ok(movieService.getById(id));
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<?> searchByName(@RequestParam String name) {
-//        return ResponseEntity.ok(movieService.searchByName(name));
-//    }
+    @GetMapping("/search")
+    public ResponseEntity<?> searchByName(@RequestParam MovieType movieType) {
+        return ResponseEntity.ok(movieService.getByType(movieType));
+    }
 }

@@ -9,7 +9,6 @@ public interface PersonService<T extends Person> {
     T update(Long id, T person);
     void delete(Long id);
     List<T> getAll();
-    List<T> getByName(String name);
     T getById(Long id);
     List<T> searchByName(String name);
 }

@@ -1,23 +1,16 @@
 package com.project.smdb.service.impl;
 
-import com.project.smdb.domain.Actor;
-import com.project.smdb.domain.Director;
-import com.project.smdb.domain.Movie;
-import com.project.smdb.domain.Producer;
+import com.project.smdb.domain.*;
 import com.project.smdb.exception.ResourceNotFoundException;
 import com.project.smdb.repository.ActorRepository;
 import com.project.smdb.repository.DirectorRepository;
 import com.project.smdb.repository.MovieRepository;
 import com.project.smdb.repository.ProducerRepository;
 import com.project.smdb.service.MovieService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,46 +31,60 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie create(Movie movie) {
-        Set<Actor> actors = movie.getActors().stream().map(person -> {
-            return actorRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException(person.getId()));
-        }).collect(Collectors.toCollection(HashSet::new));
 
-        Set<Director> directors = movie.getDirectors().stream().map(person -> {
-            return directorRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException(person.getId()));
-        }).collect(Collectors.toCollection(HashSet::new));
-
-        Set<Producer> producers = movie.getProducers().stream().map(person -> {
-            return producerRepository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException(person.getId()));
-        }).collect(Collectors.toCollection(HashSet::new));
-
-        movie.setActors(actors);
-        movie.setDirectors(directors);
-        movie.setProducers(producers);
-        return this.movieRepository.save(movie);
+        return movieRepository.save(buildMovie(movie));
     }
 
     @Override
     public Movie update(Long id, Movie movie) {
-        return null;
+        movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
+
+        return movieRepository.save(buildMovie(movie));
     }
 
     @Override
     public void delete(Long id) {
-
+        movieRepository.delete(movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id)));
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return new ArrayList<>((Collection<Movie>) movieRepository.findAll());
     }
 
     @Override
-    public List<Movie> getByName(String name) {
-        return null;
+    public List<Movie> getByType(MovieType type) {
+        return movieRepository.findAllByType(type);
     }
 
     @Override
     public Movie getById(Long id) {
-        return null;
+        return movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    private Movie buildMovie(Movie movie) {
+        Set<Actor> actors = movie.getActors().stream()
+                .map(person -> actorRepository.findById(person.getId())
+                        .orElseThrow(() -> new ResourceNotFoundException(person.getId())))
+                .collect(Collectors.toCollection(HashSet::new));
+
+        Set<Director> directors = movie.getDirectors().stream()
+                .map(person -> directorRepository.findById(person.getId())
+                        .orElseThrow(() -> new ResourceNotFoundException(person.getId())))
+                .collect(Collectors.toCollection(HashSet::new));
+
+        Set<Producer> producers = movie.getProducers().stream()
+                .map(person -> producerRepository.findById(person.getId())
+                        .orElseThrow(() -> new ResourceNotFoundException(person.getId())))
+                .collect(Collectors.toCollection(HashSet::new));
+
+        movie.setActors(actors);
+        movie.setDirectors(directors);
+        movie.setProducers(producers);
+
+        return movie;
     }
 }

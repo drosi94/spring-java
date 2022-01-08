@@ -1,7 +1,12 @@
 package com.project.smdb.repository;
 
 import com.project.smdb.domain.Movie;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import com.project.smdb.domain.MovieType;
+import org.springframework.data.repository.CrudRepository;
 
-public interface MovieRepository extends PagingAndSortingRepository<Movie, Long> {
+import java.util.List;
+
+public interface MovieRepository extends CrudRepository<Movie, Long> {
+    List<Movie> findAllByType(MovieType movieType);
+
 }
