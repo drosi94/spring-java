@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -25,11 +26,11 @@ import static org.jeasy.random.FieldPredicates.named;
 @Transactional
 public class DataLoader implements ApplicationRunner {
 
-    private static Logger logger = LoggerFactory.getLogger(DataLoader.class);
-    private static Faker faker = new Faker();
+    private static final Logger logger = LoggerFactory.getLogger(DataLoader.class);
+    private static final Faker faker = new Faker(new Random(24));
 
-    private GenreRepository genreRepository;
-    private MovieRepository movieRepository;
+    private final GenreRepository genreRepository;
+    private final MovieRepository movieRepository;
 
     @Autowired
     public DataLoader(GenreRepository genreRepository, MovieRepository movieRepository) {
@@ -68,6 +69,8 @@ public class DataLoader implements ApplicationRunner {
         logger.debug("Generating movies...");
 
         EasyRandomParameters parameters = new EasyRandomParameters()
+                .seed(123L)
+                .objectPoolSize(200)
                 .randomize(named("name"), () -> faker.book().title())
                 .randomize(named("plot"), () -> faker.lorem().paragraph(4))
                 .randomize(named("duration"), () -> faker.random().nextInt(60, 400))
@@ -76,7 +79,7 @@ public class DataLoader implements ApplicationRunner {
                 .randomize(named("genre"), () -> genres.toArray()[faker.random().nextInt(0, genres.size() - 1)])
                 .randomize(named("firstName"), () -> faker.name().firstName())
                 .randomize(named("lastName"), () -> faker.name().lastName())
-                .collectionSizeRange(3, 20)
+                .collectionSizeRange(3, 6)
                 .excludeField(named("id"));
 
         var movieRandomizer = new EasyRandom(parameters);
