@@ -43,7 +43,7 @@ public class DataLoader implements ApplicationRunner {
         var genres = generateGenres();
         genreRepository.saveAll(genres);
 
-        var movies = generateRandomMovies(200, genres);
+        var movies = generateRandomMovies(500, genres);
 
         movieRepository.saveAll(movies);
     }

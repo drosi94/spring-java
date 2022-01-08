@@ -1,6 +1,7 @@
 package com.project.smdb;
 
-import com.project.smdb.converters.MovieTypeConverter;
+import com.project.smdb.converter.MovieTypeConverter;
+import com.project.smdb.converter.PersonRoleConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -10,5 +11,6 @@ public class WebConfiguration implements WebMvcConfigurer  {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new MovieTypeConverter());
+        registry.addConverter(new PersonRoleConverter());
     }
 }

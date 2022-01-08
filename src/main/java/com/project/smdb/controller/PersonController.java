@@ -32,8 +32,8 @@ public class PersonController<T extends Person> {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> all() {
-        return ResponseEntity.ok(personService.getAll());
+    public ResponseEntity<?> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int limit) {
+        return ResponseEntity.ok(personService.getAll(page, limit));
     }
 
     @GetMapping("/{id}")

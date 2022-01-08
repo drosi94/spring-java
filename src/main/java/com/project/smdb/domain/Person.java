@@ -1,5 +1,8 @@
 package com.project.smdb.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -21,6 +24,10 @@ public class Person implements Serializable {
     @Column(name="last_name", nullable = false)
     @NotBlank(message = "Last name is mandatory")
     private String lastName;
+
+    @Formula("CONCAT_WS(' ', first_name, last_name)")
+    @JsonIgnore
+    private String fullName;
 
     public Person() {
     }
@@ -47,6 +54,14 @@ public class Person implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     @Override

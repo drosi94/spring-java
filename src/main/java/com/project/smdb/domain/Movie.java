@@ -1,6 +1,7 @@
 package com.project.smdb.domain;
 
 
+import com.project.smdb.domain.type.MovieType;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 

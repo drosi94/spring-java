@@ -1,7 +1,7 @@
 package com.project.smdb.controller;
 
 import com.project.smdb.domain.Movie;
-import com.project.smdb.domain.MovieType;
+import com.project.smdb.domain.type.MovieType;
 import com.project.smdb.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +37,8 @@ public class MovieController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> all() {
-        return ResponseEntity.ok(movieService.getAll());
+    public ResponseEntity<?> all(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int limit) {
+        return ResponseEntity.ok(movieService.getAll(page, limit));
     }
 
     @GetMapping("/{id}")

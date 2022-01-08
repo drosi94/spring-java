@@ -4,10 +4,9 @@ import com.project.smdb.domain.Person;
 import com.project.smdb.exception.ResourceNotFoundException;
 import com.project.smdb.repository.PersonRepository;
 import com.project.smdb.service.PersonService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public abstract class PersonServiceImpl<T extends Person> implements PersonService<T> {
@@ -38,8 +37,8 @@ public abstract class PersonServiceImpl<T extends Person> implements PersonServi
     }
 
     @Override
-    public List<T> getAll() {
-        return new ArrayList<>((Collection<? extends T>) personRepository.findAll());
+    public Page<T> getAll(int page, int limit) {
+        return personRepository.findAll(PageRequest.of(page, limit));
     }
 
     @Override
@@ -50,7 +49,7 @@ public abstract class PersonServiceImpl<T extends Person> implements PersonServi
 
     @Override
     public List<T> searchByName(String name) {
-        return personRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(name, name);
+        return personRepository.findByFullNameContainingIgnoreCase(name);
     }
 
 }
