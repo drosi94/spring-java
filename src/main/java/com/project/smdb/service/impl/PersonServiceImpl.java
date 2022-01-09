@@ -35,9 +35,13 @@ public abstract class PersonServiceImpl<T extends Person> implements PersonServi
     public void delete(Long id) {
         T person = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
-        for (Movie movie: person.getMovies()){
-            person.removeMovie(movie);
+
+        if (person.getMovies().size() > 0) {
+            for (Movie movie: person.getMovies()){
+                person.removeMovie(movie);
+            }
         }
+
         personRepository.delete(person);
     }
 
