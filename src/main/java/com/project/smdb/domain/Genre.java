@@ -19,7 +19,7 @@ public class Genre implements Serializable {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @Column(name="name", nullable = false)
+    @Column(name="name", nullable = false, unique = true)
     @NotBlank(message = "Name can not be blank")
     private String name;
 
@@ -52,5 +52,10 @@ public class Genre implements Serializable {
 
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
