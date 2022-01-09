@@ -3,6 +3,7 @@ package com.project.smdb.controller;
 import com.project.smdb.domain.Genre;
 import com.project.smdb.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class GenreController {
 
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody Genre genre) {
-        return ResponseEntity.ok(genreService.create(genre));
+        return ResponseEntity.status(HttpStatus.CREATED).body(genreService.create(genre));
     }
 
     @PutMapping("/{id}")

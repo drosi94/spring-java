@@ -48,6 +48,7 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
 
+        movie.setId(id);
         return movieRepository.save(buildMovie(movie));
     }
 

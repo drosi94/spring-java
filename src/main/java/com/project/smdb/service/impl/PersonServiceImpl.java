@@ -28,6 +28,7 @@ public abstract class PersonServiceImpl<T extends Person> implements PersonServi
         personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
 
+        person.setId(id);
         return personRepository.save(person);
     }
 

@@ -31,6 +31,7 @@ public class GenreServiceImpl implements GenreService {
         genreRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(id));
 
+        genre.setId(id);
         return genreRepository.save(genre);
     }
 

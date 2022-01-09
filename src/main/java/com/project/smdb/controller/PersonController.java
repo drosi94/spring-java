@@ -2,6 +2,7 @@ package com.project.smdb.controller;
 
 import com.project.smdb.domain.Person;
 import com.project.smdb.service.PersonService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class PersonController<T extends Person> {
 
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody T person) {
-        return ResponseEntity.ok(personService.create(person));
+        return ResponseEntity.status(HttpStatus.CREATED).body(personService.create(person));
     }
 
     @PutMapping("/{id}")

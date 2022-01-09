@@ -4,6 +4,7 @@ import com.project.smdb.domain.Movie;
 import com.project.smdb.domain.type.MovieType;
 import com.project.smdb.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class MovieController {
 
     @PostMapping("")
     public ResponseEntity<?> create(@Valid @RequestBody Movie movie) {
-        return ResponseEntity.ok(movieService.create(movie));
+        return ResponseEntity.status(HttpStatus.CREATED).body(movieService.create(movie));
     }
 
     @PutMapping("/{id}")
