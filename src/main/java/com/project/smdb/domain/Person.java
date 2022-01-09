@@ -6,9 +6,10 @@ import org.hibernate.annotations.Formula;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.Set;
 
 @MappedSuperclass
-public class Person implements Serializable {
+public abstract class Person implements Serializable {
 
     private static final long serialVersionUID = 2162575753674609041L;
 
@@ -63,6 +64,10 @@ public class Person implements Serializable {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
+
+
+    public abstract Set<Movie> getMovies();
+    public abstract void removeMovie(Movie movie);
 
     @Override
     public String toString() {

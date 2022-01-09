@@ -19,6 +19,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import static org.jeasy.random.FieldPredicates.inClass;
 import static org.jeasy.random.FieldPredicates.named;
 
 
@@ -80,7 +81,8 @@ public class DataLoader implements ApplicationRunner {
                 .randomize(named("firstName"), () -> faker.name().firstName())
                 .randomize(named("lastName"), () -> faker.name().lastName())
                 .collectionSizeRange(3, 6)
-                .excludeField(named("id"));
+                .excludeField(named("id"))
+                .excludeField(named("movies"));
 
         var movieRandomizer = new EasyRandom(parameters);
 

@@ -1,5 +1,6 @@
 package com.project.smdb.service.impl;
 
+import com.project.smdb.domain.Movie;
 import com.project.smdb.domain.Person;
 import com.project.smdb.exception.ResourceNotFoundException;
 import com.project.smdb.repository.PersonRepository;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public abstract class PersonServiceImpl<T extends Person> implements PersonService<T> {
 
-    private final PersonRepository<T> personRepository;
+    protected final PersonRepository<T> personRepository;
 
     public PersonServiceImpl(PersonRepository<T> personRepository) {
         this.personRepository = personRepository;
@@ -32,8 +33,12 @@ public abstract class PersonServiceImpl<T extends Person> implements PersonServi
 
     @Override
     public void delete(Long id) {
-        personRepository.delete(personRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(id)));
+        T person = personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(id));
+        for (Movie movie: person.getMovies()){
+            person.removeMovie(movie);
+        }
+        personRepository.delete(person);
     }
 
     @Override
