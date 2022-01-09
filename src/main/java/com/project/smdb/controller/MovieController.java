@@ -47,7 +47,7 @@ public class MovieController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchByName(@RequestParam MovieType movieType) {
+    public ResponseEntity<?> searchByType(@RequestParam MovieType movieType) {
         return ResponseEntity.ok(movieService.getByType(movieType));
     }
 }

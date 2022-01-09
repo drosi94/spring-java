@@ -19,7 +19,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import static org.jeasy.random.FieldPredicates.inClass;
 import static org.jeasy.random.FieldPredicates.named;
 
 
