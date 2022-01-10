@@ -179,7 +179,6 @@ public class BackupServiceImpl implements BackupService {
     }
 
     private CsvBeanWriter createCSVWriter(String fileName) throws IOException {
-
         FileWriter fileWriter = new FileWriter(fileName);
 
         return new CsvBeanWriter(fileWriter, CsvPreference.STANDARD_PREFERENCE);
